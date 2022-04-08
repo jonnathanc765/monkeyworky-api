@@ -1,0 +1,4 @@
+php artisan queue:work --queue=emails
+php artisan queue:work --queue=message
+php artisan queue:work --queue=orders
+php artisan websocket:serve

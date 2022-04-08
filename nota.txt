@@ -1,0 +1,1 @@
+1- El proyecto está utilizando spatie/laravel-permission pero está editado personalmente por mi para mejorar el funcionamiento con varios tokens.
