@@ -157,7 +157,7 @@ class OrderController extends Controller
             ]);
             $order->update(['status' => Order::ADDED_PAYMENT]);
             DB::commit();
-            return $this->successfulResponse(CodeResponse::CREATED);
+            return $this->showOne(new DetailsResource($order));
         } catch (Exception $e) {
             DB::rollback();
             return $e;
