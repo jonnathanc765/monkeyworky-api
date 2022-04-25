@@ -14,35 +14,19 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
-        $category = Category::create(['name' => 'VEHÍCULOS']);
-        $category->subCategories()->create(['name' => 'SINTETICO']);
-        $category->subCategories()->create(['name' => 'SEMISINTETICO']);
-        $category->subCategories()->create(['name' => 'MINERAL']);
+        $category = Category::create(['name' => 'MUGS', 'picture' => 'categories/mugs.svg']);
+        $category->subCategories()->create(['name' => 'MUGS']);
 
-        $category = Category::create(['name' => 'MOTOS']);
-        $category->subCategories()->create(['name' => '4 TIEMPOS']);
-        $category->subCategories()->create(['name' => '2 TIEMPOS MINERAL']);
-        $category->subCategories()->create(['name' => '2 TEIMPOS SEMISINTETICO']);
+        $category = Category::create(['name' => 'NERDSTUFF', 'picture' => 'categories/nerdstuff.svg']);
+        $category->subCategories()->create(['name' => 'NERDSTUFF']);
 
-        $category = Category::create(['name' => 'MARINOS']);
-        $category->subCategories()->create(['name' => 'MARINOS']);
+        $category = Category::create(['name' => 'OFFICE', 'picture' => 'categories/office.svg']);
+        $category->subCategories()->create(['name' => 'OFFICE']);
 
-        $category = Category::create(['name' => 'TRANSMISIONES']);
-        $category->subCategories()->create(['name' => 'AUTOMATICA']);
-        $category->subCategories()->create(['name' => 'MANUALES']);
+        $category = Category::create(['name' => 'PHONE', 'picture' => 'categories/phone.svg']);
+        $category->subCategories()->create(['name' => 'PHONE']);
 
-        $category = Category::create(['name' => 'INDUSTRIALES']);
-        $category->subCategories()->create(['name' => 'INDUSTRIALES']);
-
-
-        $category = Category::create(['name' => 'MANTENIMIENTO']);
-        $category->subCategories()->create(['name' => 'GRASAS']);
-        $category->subCategories()->create(['name' => 'LIMPIEZA']);
-        $category->subCategories()->create(['name' => 'REFRIGERANTES']);
-        $category->subCategories()->create(['name' => 'LIGA DE FRENOS']);
-
-        $category = Category::create(['name' => 'MOTORES A GAS']);
-        $category->subCategories()->create(['name' => 'MINERAL']);
-
+        $category = Category::create(['name' => 'SHIRTS', 'picture' => 'categories/shirts.svg']);
+        $category->subCategories()->create(['name' => 'SHIRTS']);
     }
 }

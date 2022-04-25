@@ -6,10 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use App\Utils\ImageTrait;
+
 use Exception;
 
 class CategoryController extends Controller
 {
+    use ImageTrait;
     /**
      * Display a listing of the resource.
      *
@@ -28,10 +34,21 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
+        DB::beginTransaction();
         try {
-            Category::create($request->validated());
+            $date = new Carbon();
+            $name = str_replace(' ', '-', $request->name);
+            $category = Category::create([
+                'name' => $request->name,
+                'picture' => ($request->hasFile('picture')) ? $request->file('picture')->storeAs("categories", "$name-$date->timestamp.png", 'public') : null,
+            ]);
+
+            $category->save();
+            DB::commit();
+
             return $this->successfulResponse();
         } catch (Exception $e) {
+            DB::rollBack();
             return $e;
         }
     }
@@ -46,9 +63,19 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, Category $category)
     {
         try {
-            $category->update($request->validated());
+            $date = new Carbon();
+            $category->name = $request->name;
+            if ($request->hasFile('picture')) {
+                $name = str_replace(' ', '-', $request->name);
+                $this->deleteImage($category->picture);
+                $category->picture = $request->file('picture')->storeAs("categories", "$name-$date->timestamp.png", 'public');
+            }
+
+            $category->update();
+            DB::commit();
             return $this->successfulResponse();
         } catch (Exception $e) {
+            DB::rollBack();
             return $e;
         }
     }

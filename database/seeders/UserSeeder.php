@@ -19,13 +19,13 @@ class UserSeeder extends Seeder
     {
         $people = People::create([
             'firstname' => 'Admin',
-            'lastname' => 'Admin',
+            'lastname' => 'Monkey',
             'state_id' => 13,
         ]);
 
         $user = $people->user()->create([
-            'email' => 'admin@skylubricantes.com',
-            'password' => Hash::make('admin123'),
+            'email' => 'admin@monkeyworky.com',
+            'password' => Hash::make('password'),
         ]);
 
         $user->assignRole(Role::findByName('admin'));

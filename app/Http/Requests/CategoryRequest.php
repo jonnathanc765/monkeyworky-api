@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
 class CategoryRequest extends FormRequest
 {
     /**
@@ -25,13 +25,15 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:100',
+            'picture' => [Rule::requiredIf($this->path() == 'api/category'), 'file'],
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'nombre'
+            'name' => 'nombre',
+            'picture' => 'imagen de la categoria',
         ];
     }
 }
