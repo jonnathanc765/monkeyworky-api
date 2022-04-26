@@ -63,7 +63,7 @@ class OrderController extends Controller
             $total = 0;
             $products = [];
 
-            $bank = Bank::find($request->bank);
+            // $bank = Bank::find($request->bank);
 
             foreach ($user->shoppingCart as $row) :
                 $total += $row->quantity * $row->variation->price;
@@ -79,7 +79,7 @@ class OrderController extends Controller
             $order = $user->orders()->create([
                 'type_id' => $request->type,
                 'status' => Order::PENDING_FOR_PAYMENT,
-                'total' => $bank->type === 'USD' ? $total : $total + ($total * 0.16),
+                'total' => $total + ($total * 0.16),
                 'total_bs' => 0,
             ]);
 
@@ -88,7 +88,7 @@ class OrderController extends Controller
             }
             $order->products()->createMany($products);
             DB::commit();
-            return $this->showOne(new OrderResource($order));
+            return $this->showOne(new DetailsResource($order));
         } catch (Exception $e) {
             DB::rollback();
             return $e;

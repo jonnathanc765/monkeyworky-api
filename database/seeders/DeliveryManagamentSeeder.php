@@ -18,16 +18,16 @@ class DeliveryManagamentSeeder extends Seeder
             'name' => 'Delivery',
             'description' => 'El tiempo estimado de entrega para el delivery es de 48 horas. Para
             mayor información escriba al 04121654567.',
-            'icon' => 'icons-sky/icons/delivery-blanco.png',
-            'icon_active' => 'icons-sky/icons/Delivery.png',
+            'icon' => 'icons-sky/icons/delivery.svg',
+            'icon_active' => 'icons-sky/icons/delivery-click.svg',
         ]);
 
         DeliveryManagement::create([
             'name' => 'Retiro en tienda',
             'description' => 'Av. Circunvalación Norte con Av. Las Industrias, Zona Industrial II.
             Local Nro. S/N. Zona Oeste. Barquisimeto, Edo.Lara',
-            'icon' => 'icons-sky/icons/retiro-tienda.png',
-            'icon_active' => 'icons-sky/icons/retiro-en-tienda-rojo.png',
+            'icon' => 'icons-sky/icons/retiro-tienda.svg',
+            'icon_active' => 'icons-sky/icons/retiro-tienda-click.svg',
         ]);
     }
 }

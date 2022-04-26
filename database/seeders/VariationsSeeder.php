@@ -14,11 +14,8 @@ class VariationsSeeder extends Seeder
      */
     public function run()
     {
-        VariationSize::create(['size' => 'Tarro']);
-        VariationSize::create(['size' => 'Litro']);
-        VariationSize::create(['size' => 'Galon']);
-        VariationSize::create(['size' => 'Paila']);
-        VariationSize::create(['size' => 'Tambor']);
-        VariationSize::create(['size' => 'Totem']);
+        VariationSize::create(['size' => 'Small']);
+        VariationSize::create(['size' => 'Medium']);
+        VariationSize::create(['size' => 'Large']);
     }
 }

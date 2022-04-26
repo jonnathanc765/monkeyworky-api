@@ -17,7 +17,6 @@ class DetailsResource extends JsonResource
     {
         return [
             'order' => new OrderResource($this),
-            'payment' => new PaymentResource($this->payment),
             'products' => ProductsResource::collection($this->products),
             'address' => isset($this->address) ? new AddressDetailsResource($this->address->address) : null,
         ];

@@ -24,18 +24,18 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'bank' => 'required|exists:banks,id',
-            'type' => 'required|exists:delivery_management,id',
-            'address' => 'nullable|numeric',
+            // 'bank' => 'required|exists:banks,id',
+            // 'type' => 'required|exists:delivery_management,id',
+            // 'address' => 'nullable|numeric',
         ];
     }
 
     public function attributes()
     {
         return [
-            'type' => 'tipo de entrega',
-            'address' => 'dirección',
-            'bank' => 'banco',
+            // 'type' => 'tipo de entrega',
+            // 'address' => 'dirección',
+            // 'bank' => 'banco',
         ];
     }
 }
