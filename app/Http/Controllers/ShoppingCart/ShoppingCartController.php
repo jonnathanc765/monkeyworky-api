@@ -41,7 +41,7 @@ class ShoppingCartController extends Controller
                     'quantity' => $request->quantity,
                 ]);
             } else {
-                $exist->update(['quantity' => $exist->quantity += $request->quantity]);
+                $exist->update(['quantity' => $exist->quantity = $request->quantity]);
             }
             return $this->successfulResponse(CodeResponse::CREATED);
         } catch (Exception $e) {
