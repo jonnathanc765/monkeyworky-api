@@ -5,6 +5,7 @@ use App\Http\Controllers\Address\StateController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Bank\BankController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Category\SubCategoryController;
 use App\Http\Controllers\DeliveryManagement\DeliveryManagementController;
@@ -48,6 +49,10 @@ Route::prefix('public')->group(function () {
     Route::get('/state', [StateController::class, 'index']);
     Route::get('/state/{state}', [StateController::class, 'show']);
     Route::get('/municipality/{municipality}', [StateController::class, 'showMunicipality']);
+    Route::prefix('banners')->group(function () {
+        Route::get('', [BannerController::class, 'index']);
+        Route::post('', [BannerController::class, 'store']);
+    });
 });
 
 /* AUTHENTICATE */
