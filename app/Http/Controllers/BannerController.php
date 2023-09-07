@@ -14,26 +14,31 @@ class BannerController extends Controller
 
     public function index()
     {
-        return Banner::all()->toJson();
+        return Banner::all();
     }
 
     public function store(CreateBannerRequest $request)
     {
-        $date = new Carbon();
         $data = $request->validated();
         $this->check_availability($data['position']);
-        $name = str_replace(' ', '-', $data['position']);
         $banner = Banner::create([
             'position' => $data['position'],
-            'picture' => $request->file('picture')->storeAs("banners", "$name-$date->timestamp.png", 'public')
         ]);
-        return $banner->toJson();
+        $banner->picture()->create([])->attach($request->picture);
+        return $banner;
     }
 
     public function show(Request $request)
     {
         $banner = Banner::where('position', $request->position)->first();
         return $banner->toJson();
+    }
+
+    public function destroy (Request $request)
+    {
+        $banner = Banner::find($request->id); 
+        $banner->picture->delete();
+        $banner->delete();
     }
 
     protected function check_availability($position = Banner::MAIN)
@@ -46,7 +51,7 @@ class BannerController extends Controller
     protected function pop_banner($position = Banner::MAIN)
     {
         $banner = Banner::where('position', $position)->first();
-        $this->deleteImage($banner->picture);
+        $banner->picture->delete();
         $banner->delete();
     }
 }

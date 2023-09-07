@@ -11,13 +11,30 @@ class Banner extends Model
     use HasFactory;
     use ImageTrait;
 
-    protected $fillable = [
-        'position',
-        'picture'
-    ];
-
     const MAIN = 'main';
     const MAX_PER_POSITION = [
         Banner::MAIN => 5
     ];
+
+    protected $fillable = [
+        'position',
+    ];
+
+    protected $appends = [
+        'picture_url'
+    ];
+
+    public function picture()
+    {
+        return $this->morphOne(Attachment::class, 'attachable');
+    }
+
+    public function getPictureUrlAttribute()
+    {
+        try {
+            return $this->picture->getUrl();
+        } catch (\Throwable $th) {
+            return null;
+        }
+    }
 }

@@ -24,7 +24,7 @@ class CreateBannerRequest extends FormRequest
     public function rules()
     {
         return [
-            'picture' => 'image',
+            'picture' => 'required|file|image|max:10240',
             'position' => 'string'
         ];
     }

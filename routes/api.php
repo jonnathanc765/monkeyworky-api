@@ -52,6 +52,7 @@ Route::prefix('public')->group(function () {
     Route::prefix('banners')->group(function () {
         Route::get('', [BannerController::class, 'index']);
         Route::post('', [BannerController::class, 'store']);
+        Route::delete('{id}', [BannerController::class, 'destroy']);
     });
 });
 
