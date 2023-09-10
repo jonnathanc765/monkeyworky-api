@@ -21,7 +21,7 @@ class PaymentResource extends JsonResource
             'email' => $this->email,
             'destination' => $this->destination,
             'date' => $this->date,
-            'voucher' => $this->voucher,
+            'voucher_url' => $this->voucher_url,
             'reference' => $this->reference,
             'created_at' => $this->created_at,
             'bank' => new BankResource($this->bank()->withTrashed()->first()),

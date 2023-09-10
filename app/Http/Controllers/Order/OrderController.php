@@ -146,15 +146,17 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             /* It should be done like this so that it does not save the temporary file */
-            $order->payment()->create([
+            $payment = $order->payment()->create([
                 'bank_id' => $request->bank,
                 'owner' => $request->owner,
                 'destination' => $request->destination,
                 'email' => $request->email,
                 'date' => $request->date,
-                'voucher' => ($request->hasFile('voucher')) ? $request->file('voucher')->store("voucher/$order->id", 'public') : null,
                 'reference' => $request->reference,
             ]);
+            if ($request->hasFile('voucher')) {
+                $payment->voucher()->create([])->attach($request->voucher);
+            }
             $order->update(['status' => Order::ADDED_PAYMENT]);
             DB::commit();
             return $this->showOne(new DetailsResource($order));

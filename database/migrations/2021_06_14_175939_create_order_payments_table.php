@@ -21,7 +21,6 @@ class CreateOrderPaymentsTable extends Migration
             $table->string('email', 150);
             $table->string('destination', 300);
             $table->date('date');
-            $table->string('voucher')->nullable();
             $table->string('reference')->nullable();
             $table->timestamps();
         });

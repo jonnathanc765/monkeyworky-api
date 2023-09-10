@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Product;
 
+use Exception;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Product;
-use App\Utils\CodeResponse;
-use App\Utils\ImageTrait;
-use Carbon\Carbon;
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
 
-    use ImageTrait;
+    // use ImageTrait;
     /**
      * Display a listing of the resource.
      *
@@ -51,13 +48,13 @@ class ProductController extends Controller
     {
         DB::beginTransaction();
         try {
-            $date = new Carbon();
-            $name = str_replace(' ', '-', $request->name);
             $product = Product::create([
                 'name' => $request->name,
                 'sub_category_id' => $request->sub_category,
-                'picture' => ($request->hasFile('picture')) ? $request->file('picture')->storeAs("products", "$name-$date->timestamp.png", 'public') : null,
             ]);
+            if ($request->hasFile('picture')) {
+                $product->picture()->create([])->attach($request->picture);
+            }
 
             foreach ($request->variations as $row) :
                 $product->variations()->create([
@@ -73,16 +70,6 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -95,14 +82,12 @@ class ProductController extends Controller
     {
         DB::beginTransaction();
         try {
-            $date = new Carbon();
             $product->name = $request->name;
             $product->sub_category_id = $request->sub_category;
 
             if ($request->hasFile('picture')) {
-                $name = str_replace(' ', '-', $request->name);
-                $this->deleteImage($product->picture);
-                $product->picture = $request->file('picture')->storeAs("products", "$name-$date->timestamp.png", 'public');
+                $product->picture->delete();
+                $product->picture()->create([])->attach($request->picture);
             }
 
             $product->saveOrFail();
@@ -129,6 +114,9 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         try {
+            if ($product->picture) {
+                $product->picture->delete();
+            }
             $product->delete();
             return $this->successfulResponse();
         } catch (Exception $e) {

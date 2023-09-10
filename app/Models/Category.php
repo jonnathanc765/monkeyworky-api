@@ -15,7 +15,10 @@ class Category extends Model
 
     protected $fillable = [
         'name',
-        'picture',
+    ];
+
+    protected $appends = [
+        'picture_url'
     ];
 
     /**
@@ -26,5 +29,19 @@ class Category extends Model
     public function subCategories(): HasMany
     {
         return $this->hasMany(SubCategory::class, 'category_id');
+    }
+
+    public function picture()
+    {
+        return $this->morphOne(Attachment::class, 'attachable');
+    }
+
+    public function getPictureUrlAttribute()
+    {
+        try {
+            return $this->picture->getUrl();
+        } catch (\Throwable $th) {
+            return null;
+        }
     }
 }

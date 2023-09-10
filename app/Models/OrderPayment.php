@@ -21,6 +21,10 @@ class OrderPayment extends Model
         'reference',
     ];
 
+    protected $appends = [
+        'voucher_url'
+    ];
+
     /**
      * Get the order that owns the OrderPayment
      *
@@ -40,4 +44,20 @@ class OrderPayment extends Model
     {
         return $this->belongsTo(Bank::class, 'bank_id');
     }
+
+    
+    public function voucher()
+    {
+        return $this->morphOne(Attachment::class, 'attachable');
+    }
+
+    public function getVoucherUrlAttribute()
+    {
+        try {
+            return $this->voucher->getUrl();
+        } catch (\Throwable $th) {
+            return null;
+        }
+    }
+
 }

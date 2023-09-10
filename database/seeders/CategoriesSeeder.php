@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\UploadedFile;
 
 class CategoriesSeeder extends Seeder
 {
@@ -14,19 +15,10 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
-        $category = Category::create(['name' => 'MUGS', 'picture' => 'categories/mugs.svg']);
-        $category->subCategories()->create(['name' => 'MUGS']);
-
-        $category = Category::create(['name' => 'NERDSTUFF', 'picture' => 'categories/nerdstuff.svg']);
-        $category->subCategories()->create(['name' => 'NERDSTUFF']);
-
-        $category = Category::create(['name' => 'OFFICE', 'picture' => 'categories/office.svg']);
-        $category->subCategories()->create(['name' => 'OFFICE']);
-
-        $category = Category::create(['name' => 'PHONE', 'picture' => 'categories/phone.svg']);
-        $category->subCategories()->create(['name' => 'PHONE']);
-
-        $category = Category::create(['name' => 'SHIRTS', 'picture' => 'categories/shirts.svg']);
-        $category->subCategories()->create(['name' => 'SHIRTS']);
+        $category = Category::create(['name' => 'MUGS']);
+        $filePath = public_path('images/categories/mugs.svg');
+        $file = new UploadedFile($filePath, 'mugs.svg', 'image/svg', null, true);
+        $category->picture()->create([])->attach($file);
+        $category->subCategories()->create(['name' => 'Mugs']);
     }
 }

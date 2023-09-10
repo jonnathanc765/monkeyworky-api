@@ -37,4 +37,22 @@ class Product extends Model
     {
         return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
+
+    protected $appends = [
+        'picture_url'
+    ];
+
+    public function picture()
+    {
+        return $this->morphOne(Attachment::class, 'attachable');
+    }
+
+    public function getPictureUrlAttribute()
+    {
+        try {
+            return $this->picture->getUrl();
+        } catch (\Throwable $th) {
+            return null;
+        }
+    }
 }

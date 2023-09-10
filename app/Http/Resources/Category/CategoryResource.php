@@ -17,7 +17,7 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'picture' => $this->picture,
+            'picture_url' => $this->picture_url,
             'subcategories' => ShortSubCategoryResource::collection($this->subCategories()->orderBy('updated_at', 'DESC')->get())
         ];
     }

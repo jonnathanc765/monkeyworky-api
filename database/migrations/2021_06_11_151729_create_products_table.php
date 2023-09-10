@@ -17,7 +17,6 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->foreignId('sub_category_id')->constrained('sub_categories')->onDelete('cascade');
             $table->string('name', 150);
-            $table->string('picture')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
