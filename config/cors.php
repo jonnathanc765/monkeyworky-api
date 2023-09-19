@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['https://mirepuesto.com.ve', 'https://api.mirepuesto.com.ve'],
 
     'allowed_origins_patterns' => [],
 
